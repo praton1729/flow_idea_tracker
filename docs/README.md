@@ -8,8 +8,13 @@
 - Upon clicking or pressing enter the block should open the full description
   otherwise it should just display the summary.
 - The plan is store the data in json/sql/plain text format whichcould be parsed by other GUI/web clients.
-- This tool would be part of any code repo.
+- This tool could be part of any code repo.
 	- This tool can be initiated like git init.
+- The code needs to be written with modularity and reusability in mind.
+	- Maybe this needs to be broken down into simpler projects.
+	- Like the idea drawer which will parse the json files and draw a graph
+	  could be a project in itself.
+	- **This needs more thought.**
 
 # Flow chart representation
 ```c
@@ -23,6 +28,10 @@
                                   ------>|     Step-2 	 |-------> and so on...
                                          ----------------- 
 ```
+*Need to create a better flow diagram in xfig*
+
+- **Need to draw a state machine for the idea editor flow**.
+	- Draw a state machine catering to all decided shortcut keys.
 
 # Idea struct
 
@@ -70,10 +79,28 @@ int add_idea_block_to_the_top_of(struct idea_node* current_node);
 int add_idea_block_to_the_bottom_of(struct idea_node* current_node);
 int copy_this_block(struct idea_node* copy_source);
 int paste_to_this_block(struct idea_node* paste_desitination);
+int edit_this_block(struct idea_nore* current_node);
 ```
 - Need to implement an idea window which will be a simple ncurses screen with keyboard enable navigation.
 - Should be able to parse any given idea and draw a simple flowchart.
 - No low level routines should be exposed to the main application.
+- Press `c` for copy, `e` for edit, `v` for paste, and `q` for exit.
+- Edit will open the idea node in an edit window which will show all parameters in a
+  vim window and ready for edit.
+- **Need to draw a state machine for this**.
+
+## Dir structure of `.flow` dir
+
+- `.flowconfig` : config file.
+	- Would need to write a small parser for parsing it.
+	- Use `yacc` and `bison` for it.
+	- It would be a good exercise to write a small parser in C.
+	- Format of the configs would be simply `CONFIG_OPTION=<value>`.
+	- Need to document all the config options in man page.
+	- The default config file would have all options enabled if option is
+	  boolean otherwise a default value would be provided.
+- Can store the `ideas` dir inside the `.flow` dir,
+	- All `.json` flles would be stored inside it.
 
 # Controlflow of the application
 
@@ -83,14 +110,15 @@ int paste_to_this_block(struct idea_node* paste_desitination);
 
 ## Home screen
 - Welcome message is printed.
-- If launched then it will look for a dir named `.flow`
+- If launched with proper options then it will look for a dir named `.flow` for
+  config options.
 - If `.flow` dir is not found then it will create it.
-for the will ask for 2 options i.e. what is the purpose research or code.
+- It will ask for 2 options i.e. what is the purpose research or code.
 - Lets say research is selected.
 - The control is transferred to the idea listing segment.
 
 ## Idea listing
-- Then it will look for a dir named `ideas` in the current dir and if it is not present then it will ask to create it.
+- Then it will look for a dir named `ideas` in the `.flow` dir and if it is not present then it will ask to create it.
 - If the `ideas` dir is already present then it will display the oneline summary of all the ideas as a bullet list.
 - Next it will give an option to select an idea number through a keyboard navigated selection.
 - Once an idea is selected the program will pass on the control of idea files to the idea parser.
@@ -111,3 +139,10 @@ so the new idea would always be created at the end of the list.
 
 ## Returning to last working idea
 - An optional option when the application would be relaunched be to directly to go to the last idea the user was working on.
+
+## Man page
+- Look into `scdoc` to generate man pages easily.
+
+## Library Refs
+- https://en.cppreference.com/w/c/links/libs
+- https://github.com/oz123/awesome-c
