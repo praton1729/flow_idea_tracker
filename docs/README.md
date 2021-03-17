@@ -143,6 +143,9 @@ so the new idea would always be created at the end of the list.
 ## Man page
 - Look into `scdoc` to generate man pages easily.
 
+## Makefile Refs
+- https://makefiletutorial.com
+
 ## Library Refs
 - https://en.cppreference.com/w/c/links/libs
 - https://github.com/oz123/awesome-c
