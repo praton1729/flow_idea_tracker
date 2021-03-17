@@ -19,9 +19,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define ERROR_MSG(...) printf("ERROR: "__VA_ARGS__)
-#define INFO_MSG(...) printf("INFO: "__VA_ARGS__)
+#include "include/util.h"
 
 void print_welcome_message (void)
 {
@@ -80,30 +78,3 @@ int dir_not_empty(char* dir_name)
 		return 0;
 }
 
-void parse_the_cmdline_options (int number_of_args, char* args_array[])
-{
-	/* Intentionally left empty at the moment */
-}		/* -----  end of function parse_the_cmdline_options  ----- */
-
-void list_all_ideas(void)
-{
-
-}
-
-void wait_for_keypress(void)
-{
-
-}
-
-void idea_listing_interface(void)
-{
-	if (!check_existence_of_dir("ideas")) {
-		if (dir_not_empty("ideas")) {
-			list_all_ideas();
-		}
-		else {
-			INFO_MSG("No ideas exist right now\n");
-		}
-	}
-	wait_for_keypress();
-}

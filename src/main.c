@@ -18,7 +18,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "include/core.h"
 #include "include/util.h"
+#include "include/parsers.h"
 
 #define FLOW_CONFIG_DIR ".flow"
 

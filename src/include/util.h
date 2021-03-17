@@ -16,14 +16,14 @@
  * =====================================================================================
  */
 
+/* Logging related macros */
+#define ERROR_MSG(...) printf("ERROR: "__VA_ARGS__)
+#define WARN_MSG(...) printf("WARN: "__VA_ARGS__)
+#define INFO_MSG(...) printf("INFO: "__VA_ARGS__)
+
 /* Usage printing related helpers  */
 void print_welcome_message (void);
 
 /* Filesystem related helpers */
 int check_existence_of_dir (char* dir_name);
-
-/* Parsing related helpers */
-void parse_the_cmdline_options (int number_of_args, char* args_array[]);
-
-/* Interface related helpers */
-void idea_listing_interface(void);
+int dir_not_empty(char* dir_name);
