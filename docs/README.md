@@ -3,18 +3,22 @@
 - Need to think of a simple name, for time being lets call it `flow`.
 - A simple terminal ncurses based application to track research ideas and the possible options
   that we take in the way to achieve conclusion.
-- The flowchart blocks should be able to link to the code location. 
+- The flowchart blocks should be able to link to the code location.
 - This is not supposed to be a simple terminal flow chart application.
 - Upon clicking or pressing enter the block should open the full description
   otherwise it should just display the summary.
-- The plan is store the data in json/sql/plain text format whichcould be parsed by other GUI/web clients.
+- The plan is to store data in a self-defined blob format.
+	- Alternatives would be to store the data in json/sql/plain text format which could be parsed by other GUI/web clients.
 - This tool could be part of any code repo.
 	- This tool can be initiated like git init.
-- The code needs to be written with modularity and reusability in mind.
+- The code needs to be written with modularity and re-usability in mind.
 	- Maybe this needs to be broken down into simpler projects.
-	- Like the idea drawer which will parse the json files and draw a graph
+	- Like the idea drawer which will parse the idea blob files and draw a graph
 	  could be a project in itself.
 	- **This needs more thought.**
+- When the user chooses to open the commit SHA then a new split vim window
+  should be opened with that commit. Obviously this will only happen when the
+tool is launched within a git repo.
 
 # Flow chart representation
 ```c
@@ -26,7 +30,7 @@
                                   |
                                   |      -----------------
                                   ------>|     Step-2 	 |-------> and so on...
-                                         ----------------- 
+                                         -----------------
 ```
 *Need to create a better flow diagram in xfig*
 
@@ -37,35 +41,92 @@
 
 ```c
 struct idea_node{
-	int idea_id; /* Store the global idea id in the head and copy it in the branchouts */
-	char summary[MAX_SUMMARY_LENGTH]; /* Store the summary, it should be 80 chars long */
-	char description[MAX_DESCRIPTION_LENGTH]; /* Store the description of the step */
-	struct idea_node *branchouts[MAX_BRANCHOUTS]; /* Store the pointer to the branchout blocks */
-	char code_path[MAX_PATH_LENGTH]; /* Store the code path where the editor can jump to */
-	commit_sha_type sha_id; /* A suitable data type to store a commit sha which can be opened */
+	u8 node_id; /* Store the global idea id in the head and store the local node id in the branchouts */
+	DATE_TYPE creation_date; /* Store the creation date of the node to print in the idea block */
+	char summary[MAX_SUMMARY_LENGTH]; /* Store the summary, it should not be more than 80 chars long */
+	char description[MAX_DESCRIPTION_LENGTH]; /* Store the description of the step, max 400 chars long */
+	u3 number_of_branchouts; /* Stores the number of branchouts, max 8. */
+	struct idea_node *branchouts[MAX_BRANCHOUTS]; /* Store the pointer to the branchout blocks, max 8 branchouts.*/
+	int* idea_node_offsets; /* Store the offsets of each branchout idea node from the current parent node */
+	char code_path[MAX_PATH_LENGTH]; /* Store the code path where the editor can jump to, max 300 chars long. */
+	COMMIT_SHA sha_id; /* A suitable data type to store the 20 byte long commit sha which can be opened as a commit*/
 	struct links node_links[MAX_LINKS]; /* Store the relevant links in this array */
 }
 
-struct idea{
+struct idea_header{
+	u8 total_nodes_in_idea; /* Store the total number of nodes in this idea flow */
 	struct idea_node* head;
-	int idea_id;
 }
 
 struct links{
 	char link_address[200];
 	char link_description[200];
 }
+
 ```
 # Storage of user data
+
+## Design rules
+
+- Easier approach and to keep it light weight would be to create custom binary objects like git blobs.
+	- Define a format for the binary blob.
+	- Wrap content in magic numbers,(Need more info on this)
+- We need to write the idea first with a logic of following to the children node
+  from there.
+
+### Data type specific rules
+
+- To keep it easier let's fix the total number of nodes in a single idea to `256`.
+	- Lets call it `MAX_NUMBER_OF_NODES_PER_IDEA`.
+
+## Format of the binary blob
+
+- A magic number of 16 bits maybe `0x1729` to indicate the start.
+- An overall format could be starting with the head node.
+- Head node format:
+	- Next the number of nodes in this idea flow chart.
+	- Following this would be the other generic node info related to the
+	  head node. This has been mentioned below in generic node format.
+	- Close the head node portion with the magic number.
+- Generic node storing format.
+	- An 8 bit number to indicate the idea node id.
+	- A separator like '|'.
+	- An 80 chars i.e. 80 byte long summary containing ASCII chars.
+	- A separator like '|'.
+	- An 400 chars i.e. 400 byte long description containing ASCII chars.
+	- A separator like '|'.
+	- Next a 3 bit number to indicate the number of branch outs from the
+	  node.
+	- A separator like '|'.
+	- An offset value for each branch out node from this node.
+		- How to order the idea nodes to make access straight-forward.
+		- Do we want to store the branchouts immediately after the
+		  parent to make mentioning of offsets easier in the parent struct.
+		- Check the design of elf format to solve this problem.
+		- Need to check how to store graphical data in binary files.
+
+### Writing logic
+
+### Reading logic
+
+#### Reading of head node
+
+- The head node portion of the blob would be read first.
+	- Read the 16-bit magic number.
+	- Read the 8-bit number indicating the total number of nodes in this
+	  idea flow.
+
+#### Reading of generic node
+
+## Alternatives for storage of user data would be
 
 - MySQL.(don't know how to store data which keeps on changing but most probably most efficient)
 - Plain text files.(easier but not efficient)
 - Json files.(easier)
-- Create custom objects like git blobs. Wrap content in magic numbers,(Need more info on this)
 
 # custom ncurses interface
 
-- Need to implement basic houskeeping functions like:-
+- Need to implement basic housekeeping functions like:-
 ```c
 int draw_idea(struct idea* current_idea);
 int save_idea(struct idea* current_idea);
@@ -87,6 +148,8 @@ int edit_this_block(struct idea_nore* current_node);
 - Press `c` for copy, `e` for edit, `v` for paste, and `q` for exit.
 - Edit will open the idea node in an edit window which will show all parameters in a
   vim window and ready for edit.
+- Whenever an idea block is added the automatic creation date should be printed and
+  stored.
 - **Need to draw a state machine for this**.
 
 ## Dir structure of `.flow` dir
@@ -100,9 +163,10 @@ int edit_this_block(struct idea_nore* current_node);
 	- The default config file would have all options enabled if option is
 	  boolean otherwise a default value would be provided.
 - Can store the `ideas` dir inside the `.flow` dir,
-	- All `.json` flles would be stored inside it.
+	- All `.idea` files would be stored inside it.
+	- These `.idea` files would be binary blobs with self-defined format.
 
-# Controlflow of the application
+# Control flow of the application
 
 - If launched without options then usage and help is printed.
 - If launched with the option `idea_tracker` then the user is presented with home screen.
@@ -119,7 +183,7 @@ int edit_this_block(struct idea_nore* current_node);
 
 ## Idea listing
 - Then it will look for a dir named `ideas` in the `.flow` dir and if it is not present then it will ask to create it.
-- If the `ideas` dir is already present then it will display the oneline summary of all the ideas as a bullet list.
+- If the `ideas` dir is already present then it will display the one line summary of all the ideas as a bullet list.
 - Next it will give an option to select an idea number through a keyboard navigated selection.
 - Once an idea is selected the program will pass on the control of idea files to the idea parser.
 
@@ -129,18 +193,23 @@ int edit_this_block(struct idea_nore* current_node);
 
 ## Idea drawer screen
 - The idea drawer screen will try to draw the idea by using the parsed information.
-- If empty blob recieved then it will draw the first block of the idea and pass on the control to the user to fill it.
+- If empty blob received then it will draw the first block of the idea and pass on the control to the user to fill it.
 - The user can save the idea here once filled and exit the drawer screen.
 - The control will now be passed on to the idea listing segment.
 
 ## Creating new idea
-- By pressing `o` the user would be able to create a new idea. For simplicity I will keep the ideas sorted by their ids 
+- By pressing `o` the user would be able to create a new idea. For simplicity I will keep the ideas sorted by their ids
 so the new idea would always be created at the end of the list.
 
 ## Returning to last working idea
 - An optional option when the application would be relaunched be to directly to go to the last idea the user was working on.
 
-## Man page
+## Documentation generation
+
+## API doc generation from code comments
+- https://github.com/doxygen/doxygen
+
+### Man page
 - Look into `scdoc` to generate man pages easily.
 
 ## Makefile Refs
