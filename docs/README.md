@@ -41,7 +41,9 @@ tool is launched within a git repo.
 
 ```c
 struct idea_node{
-	u8 node_id; /* Store the global idea id in the head and store the local node id in the branchouts */
+	struct idea_node* parent_node; /* Stores the pointer to the parent, NULL for head node */
+	u8 level_of_node; /* Level in which the node is stored. */
+	u8 node_id; /* Store 0 in the head and store the local child id in children nodes. */
 	DATE_TYPE creation_date; /* Store the creation date of the node to print in the idea block */
 	char summary[MAX_SUMMARY_LENGTH]; /* Store the summary, it should not be more than 80 chars long */
 	char description[MAX_DESCRIPTION_LENGTH]; /* Store the description of the step, max 400 chars long */
@@ -54,15 +56,16 @@ struct idea_node{
 }
 
 struct idea_header{
-	u8 total_nodes_in_idea; /* Store the total number of nodes in this idea flow */
-	struct idea_node* head;
+	u8 global_idea_id; /* Store the global idea id */
+	u8 total_nodes_in_idea; /* Store the total number of nodes in this idea flow. */
+	u8 total_number_of levels; /* Store the total number of levels in this idea flow. */
+	u8 nodes_in_level[MAX_NUMBER_OF_LEVELS]; /* Stores the number of nodes at each level in this idea flow. */
 }
 
 struct links{
 	char link_address[200];
 	char link_description[200];
 }
-
 ```
 # Storage of user data
 
@@ -74,20 +77,23 @@ struct links{
 - We need to write the idea first with a logic of following to the children node
   from there.
 
-### Data type specific rules
-
-- To keep it easier let's fix the total number of nodes in a single idea to `256`.
-	- Lets call it `MAX_NUMBER_OF_NODES_PER_IDEA`.
-
 ## Format of the binary blob
 
-- A magic number of 16 bits maybe `0x1729` to indicate the start.
-- An overall format could be starting with the head node.
-- Head node format:
-	- Next the number of nodes in this idea flow chart.
-	- Following this would be the other generic node info related to the
-	  head node. This has been mentioned below in generic node format.
-	- Close the head node portion with the magic number.
+- An overall format could be starting with the header of the idea and then
+  follow the below defined blob format.
+- Header format:
+	- A magic number of 16 bits i.e. `0x1729` to indicate the start of the header.
+	- A separator like '|'.
+	- Store the global id of this idea flow as a u8.
+	- A separator like '|'.
+	- Store the total number of nodes in this idea flow as a u8.
+	- A separator like '|'.
+	- Store the total number of level in this idea flow as a u8.
+	- A separator like '|'.
+	- Store the number of nodes per level in this idea flow.
+	- A separator like '|'.
+	- A magic number of 16 bits i.e. `0x1729` to indicate the end of the header.
+- Head node would be stored just like a generic node.
 - Generic node storing format.
 	- An 8 bit number to indicate the idea node id.
 	- A separator like '|'.
@@ -104,6 +110,13 @@ struct links{
 		  parent to make mentioning of offsets easier in the parent struct.
 		- Check the design of elf format to solve this problem.
 		- Need to check how to store graphical data in binary files.
+- Store the ideas like we would store them in an array.
+	- Store the head first i.e level 0 and immediately following it store its branchouts.
+	- After the first level branchouts are laid out, then store level 2
+	  branchouts.
+	- Start laying out the level 2 branchouts starting from the children of the first
+	  node in level 1.
+	- So on....
 
 ### Writing logic
 
@@ -117,6 +130,14 @@ struct links{
 	  idea flow.
 
 #### Reading of generic node
+
+### Data type specific rules
+
+- To keep it easier let's fix the total number of nodes in a single idea to `256`.
+	- Lets call it `MAX_NUMBER_OF_NODES_PER_IDEA`.
+- To keep it simple let's fix the total number of levels in a single idea to `256`.
+- Maybe we would need to fix the max number of nodes in a single level for
+  memory constraints. Need to think about this.
 
 ## Alternatives for storage of user data would be
 
