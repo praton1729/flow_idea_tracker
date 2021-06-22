@@ -6,23 +6,26 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 CC	Makefile	/^CC=gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS=-I.\/include$/;"	m
-ERROR_MSG	include/util.h	20;"	d
+ERROR_MSG	include/util.h	8;"	d
 FLOW_BINARY	Makefile	/^FLOW_BINARY=.\/bin\/flow$/;"	m
-FLOW_CONFIG_DIR	src/flow.c	12;"	d	file:
+FLOW_CONFIG_DIR	include/config.h	2;"	d
 IDEA_LIST	include/core.h	/^struct IDEA_LIST {$/;"	s
 IDEA_LIST	include/core.h	/^typedef struct IDEA_LIST IDEA_LIST;$/;"	t	typeref:struct:IDEA_LIST
-INFO_MSG	include/util.h	22;"	d
+INFO_MSG	include/util.h	10;"	d
+LIBS	Makefile	/^LIBS=readline$/;"	m
 SOURCES_FILES	Makefile	/^SOURCES_FILES=$(wildcard src\/*.c)$/;"	m
-WARN_MSG	include/util.h	21;"	d
+WARN_MSG	include/util.h	9;"	d
 check_existence_of_dir	src/util.c	/^int check_existence_of_dir (char *dir_name)$/;"	f
 dir_not_empty	src/util.c	/^int dir_not_empty(char* dir_name)$/;"	f
 draw_idea_list_box	src/draw.c	/^void draw_idea_list_box(IDEA_LIST* idea_list)$/;"	f
+flow_initial_setup	src/util.c	/^void flow_initial_setup(void)$/;"	f
+flow_prompt	src/shell.c	/^char* flow_prompt="(flow) ";$/;"	v
+flow_shell	src/shell.c	/^void flow_shell(void)$/;"	f
 flush_screen	src/draw.c	/^void flush_screen(void)$/;"	f
-get_idea_list	src/parsers.c	/^IDEA_LIST* get_idea_list(char* dir_name)$/;"	f
+get_cmd	src/shell.c	/^char* get_cmd(void)$/;"	f
+get_cmd_status	src/shell.c	/^int get_cmd_status(char* line)$/;"	f
+get_idea_list	src/core.c	/^IDEA_LIST* get_idea_list(char* dir_name)$/;"	f
 idea_listing_interface	src/core.c	/^void idea_listing_interface(void)$/;"	f
 list_all_ideas	src/core.c	/^void list_all_ideas(void)$/;"	f
-main	src/flow.c	/^int main ( int argc, char *argv[] )$/;"	f
-parse_the_cmdline_options	src/parsers.c	/^void parse_the_cmdline_options (int number_of_args, char* args_array[])$/;"	f
+main	src/flow.c	/^int main(int argc, char** argv)$/;"	f
 print_welcome_message	src/util.c	/^void print_welcome_message (void)$/;"	f
-start_flow_shell	src/core.c	/^void start_flow_shell(void)$/;"	f
-wait_for_keypress	src/keypress.c	/^void wait_for_keypress(void)$/;"	f

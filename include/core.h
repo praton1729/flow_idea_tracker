@@ -16,4 +16,4 @@ void start_flow_shell(void);
 /* Idea listing interface functions */
 void idea_listing_interface(void);
 void list_all_ideas(void);
-
+IDEA_LIST* get_idea_list(char* dir_name);

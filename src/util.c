@@ -2,11 +2,19 @@
  *    Description:  Helper functions
  * =====================================================================================
  */
-#include <dirent.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <errno.h>
+#include "config.h"
 #include "util.h"
+
+void flow_initial_setup(void)
+{
+	print_welcome_message();
+
+	check_existence_of_dir(FLOW_CONFIG_DIR);
+}
 
 void print_welcome_message (void)
 {

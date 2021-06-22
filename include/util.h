@@ -1,18 +1,6 @@
 /*
  * =====================================================================================
- *
- *       Filename:  util.h
- *
  *    Description:  Interface to the helper functions
- *
- *        Version:  1.0
- *        Created:  Wednesday 17 March 2021 10:09:03  IST
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  PRATHU BARONIA (praton), prathu.baronia@oneplus.com
- *   Organization:  OnePlus RnD
- *
  * =====================================================================================
  */
 
@@ -21,7 +9,8 @@
 #define WARN_MSG(...) printf("WARN: "__VA_ARGS__)
 #define INFO_MSG(...) printf("INFO: "__VA_ARGS__)
 
-/* Usage printing related helpers  */
+/* Initial setup helpers */
+void flow_initial_setup(void);
 void print_welcome_message (void);
 
 /* Filesystem related helpers */

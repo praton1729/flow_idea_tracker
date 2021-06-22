@@ -4,13 +4,8 @@
  * =====================================================================================
  */
 
-#include<stdio.h>
 #include<readline/readline.h> 
 #include<readline/history.h> 
-#include "core.h"
-#include "draw.h"
-#include "parsers.h"
-#include "util.h"
 
 char* flow_prompt="(flow) ";
 
