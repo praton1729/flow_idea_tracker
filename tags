@@ -4,16 +4,22 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ERROR_MSG	src/util.c	23;"	d	file:
+ERROR_MSG	src/include/util.h	20;"	d
 FLOW_BINARY	Makefile	/^FLOW_BINARY=.\/bin\/flow$/;"	m
-FLOW_CONFIG_DIR	src/main.c	23;"	d	file:
-INFO_MSG	src/util.c	24;"	d	file:
+FLOW_CONFIG_DIR	src/main.c	25;"	d	file:
+IDEA_LIST	src/include/core.h	/^struct IDEA_LIST {$/;"	s
+IDEA_LIST	src/include/core.h	/^typedef struct IDEA_LIST IDEA_LIST;$/;"	t	typeref:struct:IDEA_LIST
+INFO_MSG	src/include/util.h	22;"	d
 SOURCES_FILES	Makefile	/^SOURCES_FILES=$(wildcard src\/*.c)$/;"	m
+WARN_MSG	src/include/util.h	21;"	d
 check_existence_of_dir	src/util.c	/^int check_existence_of_dir (char *dir_name)$/;"	f
 dir_not_empty	src/util.c	/^int dir_not_empty(char* dir_name)$/;"	f
-idea_listing_interface	src/util.c	/^void idea_listing_interface(void)$/;"	f
-list_all_ideas	src/util.c	/^void list_all_ideas(void)$/;"	f
+draw_idea_list_box	src/draw.c	/^void draw_idea_list_box(IDEA_LIST* idea_list)$/;"	f
+flush_screen	src/draw.c	/^void flush_screen(void)$/;"	f
+get_idea_list	src/parsers.c	/^IDEA_LIST* get_idea_list(char* dir_name)$/;"	f
+idea_listing_interface	src/core.c	/^void idea_listing_interface(void)$/;"	f
+list_all_ideas	src/core.c	/^void list_all_ideas(void)$/;"	f
 main	src/main.c	/^int main ( int argc, char *argv[] )$/;"	f
-parse_the_cmdline_options	src/util.c	/^void parse_the_cmdline_options (int number_of_args, char* args_array[])$/;"	f
+parse_the_cmdline_options	src/parsers.c	/^void parse_the_cmdline_options (int number_of_args, char* args_array[])$/;"	f
 print_welcome_message	src/util.c	/^void print_welcome_message (void)$/;"	f
-wait_for_keypress	src/util.c	/^void wait_for_keypress(void)$/;"	f
+wait_for_keypress	src/keypress.c	/^void wait_for_keypress(void)$/;"	f

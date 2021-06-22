@@ -31,7 +31,7 @@ void print_welcome_message (void)
      printf("\t3. Use it to track progress of life goals\n");
      printf("\t4. Use it to track progress of daily todos\n");
      printf("Cheers!!\n");
-     printf("Author: Prathu Baronia\n");
+     printf("Author: Prathu Baronia\n\n");
 }		/* -----  end of function print_welcome_message  ----- */
 
 /* 

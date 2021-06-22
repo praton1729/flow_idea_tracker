@@ -23,6 +23,13 @@
 #include "include/util.h"
 #include <stdio.h>
 
+void start_flow_shell(void)
+{
+	while(1){
+		printf("flow> ");
+	}
+}
+
 void list_all_ideas(void)
 {
 	IDEA_LIST* idea_list = get_idea_list("ideas");

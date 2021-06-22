@@ -40,7 +40,9 @@ int main ( int argc, char *argv[] )
 
 	parse_the_cmdline_options(argc, argv);
 
-	idea_listing_interface();
+	/* Implement the flow prompt and print out info based on commands */
+	
+	start_flow_shell();
 
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
