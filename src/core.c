@@ -3,19 +3,12 @@
  * =====================================================================================
  */
 
-#include <stdio.h>
+#include<stdio.h>
+#include<readline/readline.h> 
+#include<readline/history.h> 
 #include "core.h"
 #include "draw.h"
-#include "keypress.h"
-#include "parsers.h"
 #include "util.h"
-
-void start_flow_shell(void)
-{
-	while(1){
-		printf("flow> ");
-	}
-}
 
 void list_all_ideas(void)
 {
@@ -34,5 +27,9 @@ void idea_listing_interface(void)
 			INFO_MSG("No ideas exist right now\n");
 		}
 	}
-	wait_for_keypress();
+}
+
+IDEA_LIST* get_idea_list(char* dir_name)
+{
+	/* TODO */
 }

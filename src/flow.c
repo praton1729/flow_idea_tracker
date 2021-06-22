@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include "core.h"
 #include "util.h"
-#include "parsers.h"
 
 #define FLOW_CONFIG_DIR ".flow"
 
