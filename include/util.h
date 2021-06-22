@@ -14,5 +14,6 @@ void flow_initial_setup(void);
 void print_welcome_message (void);
 
 /* Filesystem related helpers */
+void check_and_create_dir (char* dir_name);
 int check_existence_of_dir (char* dir_name);
 int dir_not_empty(char* dir_name);

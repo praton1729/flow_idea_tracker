@@ -4,14 +4,27 @@
  * =====================================================================================
  */
 
-#include<readline/readline.h> 
-#include<readline/history.h> 
+#include <string.h>
+#include <readline/readline.h> 
+#include <readline/history.h> 
+#include "util.h"
+#include "handlers.h"
+
+extern cmd_struct flow_cmd_list[];
 
 char* flow_prompt="(flow) ";
 
-int get_cmd_status(char* line)
-{
-	return 1;
+int exec_cmd(char* cmd)
+{	
+	for(int i=0; i < CMD_NR; i++)
+	{
+		if(strcmp(cmd, flow_cmd_list[i].cmd_name) == 0){
+			return flow_cmd_list[i].cmd_handler();
+		}
+		
+	}
+	ERROR_MSG("%s: command not found\n", cmd);
+	return -1;
 }
 
 char* get_cmd(void)
@@ -22,13 +35,20 @@ char* get_cmd(void)
 	return input;
 }
 
-void flow_shell(void)
+void __flow_shell(void)
 {
 	char* line;
 	int status;
 
 	do{
 		line = get_cmd();
-		status = get_cmd_status(line);
+		status = exec_cmd(line);
 	} while(status);
+}
+
+void flow_shell(void)
+{
+	while(1){
+		__flow_shell();
+	}
 }
