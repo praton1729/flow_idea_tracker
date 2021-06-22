@@ -1,18 +1,5 @@
-/*
- * =====================================================================================
- *
- *       Filename:  util.c
- *
+/* =====================================================================================
  *    Description:  Helper functions
- *
- *        Version:  1.0
- *        Created:  Wednesday 17 March 2021 09:33:17  IST
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  PRATHU BARONIA (praton), prathu.baronia@oneplus.com
- *   Organization:  OnePlus RnD
- *
  * =====================================================================================
  */
 #include <dirent.h>
@@ -32,14 +19,8 @@ void print_welcome_message (void)
      printf("\t4. Use it to track progress of daily todos\n");
      printf("Cheers!!\n");
      printf("Author: Prathu Baronia\n\n");
-}		/* -----  end of function print_welcome_message  ----- */
+}
 
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  check_for_config_dir
- *  Description:  Checks for a directory named '.flow' in the current dir. 
- * =====================================================================================
- */
 int check_existence_of_dir (char *dir_name)
 {
 	DIR* dir_ptr = opendir(dir_name);
@@ -58,7 +39,7 @@ int check_existence_of_dir (char *dir_name)
 	}
 
 	return EXIT_SUCCESS;
-}		/* -----  end of function check_for_config_dir  ----- */
+}
 
 int dir_not_empty(char* dir_name)
 {
@@ -77,4 +58,3 @@ int dir_not_empty(char* dir_name)
 	else
 		return 0;
 }
-

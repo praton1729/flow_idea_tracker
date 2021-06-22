@@ -1,18 +1,5 @@
-/*
- * =====================================================================================
- *
- *       Filename:  core.c
- *
+/* =====================================================================================
  *    Description:  Contains all the core/top level functions.
- *
- *        Version:  1.0
- *        Created:  Thursday 18 March 2021 12:45:13  IST
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  PRATHU BARONIA (praton), prathu.baronia@oneplus.com
- *   Organization:  OnePlus RnD
- *
  * =====================================================================================
  */
 

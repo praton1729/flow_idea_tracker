@@ -1,18 +1,5 @@
-/*
- * =====================================================================================
- *
- *       Filename:  draw.c
- *
+/* =====================================================================================
  *    Description:  Contains all the ncurses based drawing logic.
- *
- *        Version:  1.0
- *        Created:  Thursday 18 March 2021 12:42:09  IST
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  PRATHU BARONIA (praton), prathu.baronia@oneplus.com
- *   Organization:  OnePlus RnD
- *
  * =====================================================================================
  */
 #include <curses.h>
