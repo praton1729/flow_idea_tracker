@@ -3,7 +3,7 @@
  * =====================================================================================
  */
 
-#include "include/core.h"
+#include "core.h"
 
 void parse_the_cmdline_options (int number_of_args, char* args_array[])
 {

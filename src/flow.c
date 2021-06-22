@@ -5,13 +5,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "include/core.h"
-#include "include/util.h"
-#include "include/parsers.h"
+#include "core.h"
+#include "util.h"
+#include "parsers.h"
 
 #define FLOW_CONFIG_DIR ".flow"
 
-int main ( int argc, char *argv[] )
+int main(int argc, char** argv)
 {
 	print_welcome_message();
 
@@ -21,7 +21,7 @@ int main ( int argc, char *argv[] )
 
 	/* Implement the flow prompt and print out info based on commands */
 	
-	start_flow_shell();
+	//start_flow_shell();
 
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */

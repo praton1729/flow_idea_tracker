@@ -6,19 +6,20 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/util.h"
+#include "util.h"
 
 void print_welcome_message (void)
 {
-     printf("!! Welcome to flow the idea tracker !!\n");
-     printf("Use it to create and track progress on anything.\n");
-     printf("Typical usecases:\n");
-     printf("\t1. Use it to track research ideas\n");
-     printf("\t2. Use it to track development of projects\n");
-     printf("\t3. Use it to track progress of life goals\n");
-     printf("\t4. Use it to track progress of daily todos\n");
-     printf("Cheers!!\n");
-     printf("Author: Prathu Baronia\n\n");
+     printf(
+	"!! Welcome to flow the idea tracker !!\n"
+	"Use it to create and track progress on anything.\n"
+     	"Typical usecases:\n"
+     	"\t1. Use it to track research ideas\n"
+     	"\t2. Use it to track development of projects\n"
+     	"\t3. Use it to track progress of life goals\n"
+     	"\t4. Use it to track progress of daily todos\n"
+     	"Cheers!!\n"
+     	"Author: Prathu Baronia\n\n");
 }
 
 int check_existence_of_dir (char *dir_name)

@@ -3,12 +3,12 @@
  * =====================================================================================
  */
 
-#include "include/core.h"
-#include "include/draw.h"
-#include "include/keypress.h"
-#include "include/parsers.h"
-#include "include/util.h"
 #include <stdio.h>
+#include "core.h"
+#include "draw.h"
+#include "keypress.h"
+#include "parsers.h"
+#include "util.h"
 
 void start_flow_shell(void)
 {

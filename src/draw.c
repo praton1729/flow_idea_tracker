@@ -3,7 +3,7 @@
  * =====================================================================================
  */
 #include <curses.h>
-#include "include/core.h"
+#include "core.h"
 
 /* This will draw a box and fill it with oneline summary of active ideas. */
 void draw_idea_list_box(IDEA_LIST* idea_list)
