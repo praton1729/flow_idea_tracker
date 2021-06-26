@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include "config.h"
+#include "util.h"
 
 void print_welcome_message (void)
 {
@@ -77,6 +78,31 @@ int dir_not_empty(char* dir_name)
 		return 1;
 	else
 		return 0;
+}
+
+int list_files_in_dir(char *dir_name)
+{
+	struct dirent* dir_ent;
+	DIR* dir_ptr = opendir(dir_name);
+	int count = 1;
+
+	if(!dir_not_empty(dir_name))
+	{	
+		ERROR_MSG("%s dir is empty\n", dir_name);
+		return -1;
+	}
+
+	while ((dir_ent = readdir(dir_ptr)) != NULL)
+	{
+		if((strcmp(dir_ent->d_name,".") == 0) || (strcmp(dir_ent->d_name,"..") == 0))
+		{
+			continue;
+		} else {
+			printf("%d: %s\n", count, dir_ent->d_name);
+			count++;
+		}
+	}
+	closedir(dir_ptr);
 }
 
 void flow_initial_setup(void)

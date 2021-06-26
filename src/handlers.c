@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "handlers.h"
+#include "util.h"
 
 int help_handler(void);
 int exit_handler(void);
@@ -14,7 +15,7 @@ cmd_struct flow_cmd_list[] = {
 
 int list_handler(void)
 {
-	
+	return list_files_in_dir("ideas");
 }
 
 int help_handler(void)
