@@ -12,13 +12,16 @@ cmd_struct flow_cmd_list[] = {
 
 int help_handler(void)
 {
-	printf("Executing help cmd handler\n");
+	for(int i=0; i < CMD_NR; i++)
+	{
+		printf("%s\t", flow_cmd_list[i].cmd_name);
+	}
+	printf("\n");
 	return 0;
 }
 
 int exit_handler(void)
 {
-	printf("Executing exit cmd handler\n");	
 	exit(EXIT_SUCCESS);
 	return 0;
 }

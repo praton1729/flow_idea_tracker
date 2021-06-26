@@ -6,25 +6,38 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 CC	Makefile	/^CC=gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS=-I.\/include$/;"	m
+CMD_NR	include/handlers.h	4;"	d
 ERROR_MSG	include/util.h	8;"	d
 FLOW_BINARY	Makefile	/^FLOW_BINARY=.\/bin\/flow$/;"	m
-FLOW_CONFIG_DIR	include/config.h	2;"	d
+FLOW_CONFIG_DIR	include/config.h	4;"	d
 IDEA_LIST	include/core.h	/^struct IDEA_LIST {$/;"	s
 IDEA_LIST	include/core.h	/^typedef struct IDEA_LIST IDEA_LIST;$/;"	t	typeref:struct:IDEA_LIST
 INFO_MSG	include/util.h	10;"	d
 LIBS	Makefile	/^LIBS=readline$/;"	m
 SOURCES_FILES	Makefile	/^SOURCES_FILES=$(wildcard src\/*.c)$/;"	m
 WARN_MSG	include/util.h	9;"	d
-check_existence_of_dir	src/util.c	/^int check_existence_of_dir (char *dir_name)$/;"	f
+__FLOW_CONFIG__	include/config.h	2;"	d
+__FLOW_SHELL_HANDLERS__	include/handlers.h	2;"	d
+__flow_shell	src/shell.c	/^void __flow_shell(void)$/;"	f
+ask_for_dir_creation	src/util.c	/^void ask_for_dir_creation(char* dir_name)$/;"	f
+check_and_create_dir	src/util.c	/^void check_and_create_dir(char *dir_name)$/;"	f
+check_existence_of_dir	src/util.c	/^int check_existence_of_dir(char *dir_name)$/;"	f
+cmd_handler	include/handlers.h	/^	int (*cmd_handler)(void);$/;"	m	struct:cmd_struct
+cmd_name	include/handlers.h	/^	char* cmd_name;$/;"	m	struct:cmd_struct
+cmd_struct	include/handlers.h	/^typedef struct cmd_struct$/;"	s
+cmd_struct	include/handlers.h	/^} cmd_struct;$/;"	t	typeref:struct:cmd_struct
 dir_not_empty	src/util.c	/^int dir_not_empty(char* dir_name)$/;"	f
 draw_idea_list_box	src/draw.c	/^void draw_idea_list_box(IDEA_LIST* idea_list)$/;"	f
+exec_cmd	src/shell.c	/^int exec_cmd(char* cmd)$/;"	f
+exit_handler	src/handlers.c	/^int exit_handler(void)$/;"	f
+flow_cmd_list	src/handlers.c	/^cmd_struct flow_cmd_list[] = {$/;"	v
 flow_initial_setup	src/util.c	/^void flow_initial_setup(void)$/;"	f
 flow_prompt	src/shell.c	/^char* flow_prompt="(flow) ";$/;"	v
 flow_shell	src/shell.c	/^void flow_shell(void)$/;"	f
 flush_screen	src/draw.c	/^void flush_screen(void)$/;"	f
 get_cmd	src/shell.c	/^char* get_cmd(void)$/;"	f
-get_cmd_status	src/shell.c	/^int get_cmd_status(char* line)$/;"	f
 get_idea_list	src/core.c	/^IDEA_LIST* get_idea_list(char* dir_name)$/;"	f
+help_handler	src/handlers.c	/^int help_handler(void)$/;"	f
 idea_listing_interface	src/core.c	/^void idea_listing_interface(void)$/;"	f
 list_all_ideas	src/core.c	/^void list_all_ideas(void)$/;"	f
 main	src/flow.c	/^int main(int argc, char** argv)$/;"	f
