@@ -41,25 +41,25 @@ tool is launched within a git repo.
 
 ```c
 struct idea_node{
-	struct idea_node* parent_node; /* Stores the pointer to the parent, NULL for head node */
+	struct idea_node* parent_node; /* NULL for head node */
 	u8 level_of_node; /* Level in which the node is stored. */
 	u8 node_id; /* Store 0 in the head and store the local child id in children nodes. */
-	DATE_TYPE creation_date; /* Store the creation date of the node to print in the idea block */
-	char summary[MAX_SUMMARY_LENGTH]; /* Store the summary, it should not be more than 80 chars long */
-	char description[MAX_DESCRIPTION_LENGTH]; /* Store the description of the step, max 400 chars long */
-	u3 number_of_branchouts; /* Stores the number of branchouts, max 8. */
-	struct idea_node *branchouts[MAX_BRANCHOUTS]; /* Store the pointer to the branchout blocks, max 8 branchouts.*/
-	int* idea_node_offsets; /* Store the offsets of each branchout idea node from the current parent node */
-	char code_path[MAX_PATH_LENGTH]; /* Store the code path where the editor can jump to, max 300 chars long. */
-	COMMIT_SHA sha_id; /* A suitable data type to store the 20 byte long commit sha which can be opened as a commit*/
-	struct links node_links[MAX_LINKS]; /* Store the relevant links in this array */
+	DATE_TYPE creation_date; /* To be printed in the idea block */
+	char summary[MAX_SUMMARY_LENGTH]; /* It should not be more than 80 chars long */
+	char description[MAX_DESCRIPTION_LENGTH]; /* max 400 chars long */
+	u3 number_of_branchouts; /* max 8. */
+	struct idea_node *branchouts[MAX_BRANCHOUTS]; /* list of branchout blocks, max 8 branchouts.*/
+	int* idea_node_offsets; /* Store the offsets of each branchout idea node from current parent node */
+	char code_path[MAX_PATH_LENGTH]; /* For the editor to jump to, max 300 chars long. */
+	COMMIT_SHA sha_id; /* Used to store the 20 byte commit sha used to view the commit*/
+	struct links node_links[MAX_LINKS]; /* Store the relevant web links in this list */
 }
 
 struct idea_header{
 	u8 global_idea_id; /* Store the global idea id */
 	u8 total_nodes_in_idea; /* Store the total number of nodes in this idea flow. */
 	u8 total_number_of levels; /* Store the total number of levels in this idea flow. */
-	u8 nodes_in_level[MAX_NUMBER_OF_LEVELS]; /* Stores the number of nodes at each level in this idea flow. */
+	u8 nodes_in_level[MAX_NUMBER_OF_LEVELS]; /* Number of nodes at each level in this idea flow. */
 }
 
 struct links{

@@ -10,6 +10,7 @@ OBJS:= src/flow.o src/handlers.o
 USER_LIBS:= ./lib/draw/libdraw.a ./lib/shell/libshell.a ./lib/util/libutil.a
 
 all: $(FLOW_BINARY)
+pdfdocs: ./docs/pdf/README.pdf
 
 ./lib/draw/libdraw.a: ./lib/draw/draw.c ./include/draw.h
 	make --directory=./lib/draw/
@@ -25,6 +26,9 @@ $(OBJS): ./src/flow.c ./src/handlers.c
 
 $(FLOW_BINARY): $(OBJS) $(USER_LIBS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ -ldraw -lshell -lutil -lreadline
+
+./docs/pdf/README.pdf: ./docs/README.md
+	pandoc -V geometry:margin=0.2in $^ -o $@
 
 clean:
 	rm -f $(FLOW_BINARY)
