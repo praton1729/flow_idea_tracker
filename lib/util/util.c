@@ -9,13 +9,6 @@
 #include <sys/stat.h>
 #include <string.h>
 #include "config.h"
-#include "util.h"
-
-void flow_initial_setup(void)
-{
-	print_welcome_message();
-	check_and_create_dir(FLOW_CONFIG_DIR);	
-}
 
 void print_welcome_message (void)
 {
@@ -31,6 +24,20 @@ void print_welcome_message (void)
      	"Author: Prathu Baronia\n\n");
 }
 
+int check_existence_of_dir(char *dir_name)
+{
+	struct stat st = {0};
+
+	if (stat(dir_name, &st) != -1) {
+		printf("INFO: %s dir exists in the current dir\n", dir_name);
+	} else {
+		printf("%s: %s\n", dir_name, strerror(errno));
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
+
 void ask_for_dir_creation(char* dir_name)
 {
 	int choice;
@@ -39,7 +46,7 @@ void ask_for_dir_creation(char* dir_name)
 	printf("Do you want to create the %s dir?[y/n]", dir_name);
 	if((choice = getchar()) == 'y'){
 		if((status = mkdir(dir_name, 0700)) == -1)
-			ERROR_MSG("mkdir failed for some reason.\n");
+			printf("Error: mkdir failed for some reason.\n");
 	}
 	return;
 }
@@ -52,20 +59,6 @@ void check_and_create_dir(char *dir_name)
 		ask_for_dir_creation(dir_name);
 
 	return;
-}
-
-int check_existence_of_dir(char *dir_name)
-{
-	struct stat st = {0};
-
-	if (stat(dir_name, &st) != -1) {
-		INFO_MSG("%s dir exists in the current dir\n", dir_name);
-	} else {
-		printf("%s: %s\n", dir_name, strerror(errno));
-		return EXIT_FAILURE;
-	}
-
-	return EXIT_SUCCESS;
 }
 
 int dir_not_empty(char* dir_name)
@@ -85,3 +78,10 @@ int dir_not_empty(char* dir_name)
 	else
 		return 0;
 }
+
+void flow_initial_setup(void)
+{
+	print_welcome_message();
+	check_and_create_dir(FLOW_CONFIG_DIR);	
+}
+

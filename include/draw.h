@@ -3,7 +3,6 @@
  * =====================================================================================
  */
 
-/* This will draw a box and fill it with oneline summary of active ideas. */
-void draw_idea_list_box(IDEA_LIST* idea_list);
+void draw_box(int, int, int, int);
 
 void flush_screen(void);

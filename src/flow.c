@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "config.h"
-#include "core.h"
 #include "util.h"
 #include "shell.h"
 

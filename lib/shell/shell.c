@@ -4,10 +4,10 @@
  * =====================================================================================
  */
 
+#include <stdio.h>
 #include <string.h>
 #include <readline/readline.h> 
 #include <readline/history.h> 
-#include "util.h"
 #include "handlers.h"
 
 extern cmd_struct flow_cmd_list[];
@@ -23,7 +23,7 @@ int exec_cmd(char* cmd)
 		}
 		
 	}
-	ERROR_MSG("%s: command not found\n", cmd);
+	printf("Error: %s command not found\n", cmd);
 	return -1;
 }
 
